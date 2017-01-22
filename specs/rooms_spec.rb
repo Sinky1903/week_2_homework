@@ -20,15 +20,20 @@ class TestRooms < MiniTest::Test
     @customer2 = Guests.new("Guest 2")
     @customer3 = Guests.new("Guest 3")
 
-    @room1 = Rooms.new("Room 1")
-    @room2 = Rooms.new("Room 2")
-    @room3 = Rooms.new("Room 3")
+    @room1 = Rooms.new("Room 1", 2)
+    @room2 = Rooms.new("Room 2", 1)
+    @room3 = Rooms.new("Room 3", 3)
 
   end
 
 
   def test_room_name
     assert_equal("Room 1", @room1.name)
+  end
+
+
+  def test_room_capacity
+    assert_equal(2, @room1.capacity)
   end
 
 
@@ -53,11 +58,21 @@ class TestRooms < MiniTest::Test
     assert_equal(1, @room2.playlist_check)
   end
 
+
   def test_empty_room
     @room1.add_guest_to_room(@customer1)
     @room1.add_guest_to_room(@customer2)
     @room1.empty_room()
     assert_equal(0, @room1.room_occupants)
+  end
+
+
+  def test_delete_songs
+    @room3.add_songs_to_room(@song1)
+    @room3.add_songs_to_room(@song2)
+    @room3.add_songs_to_room(@song3)
+    @room3.delete_songs()
+    assert_equal(0, @room3.playlist_check)
   end
 
 end
